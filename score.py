@@ -1,6 +1,6 @@
+
 import yaml
 import sys
-
 
 def score_line(line, letter):
     #find the number of things in the line that match the letter
