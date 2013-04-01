@@ -73,7 +73,11 @@ class StrangeGameScorer:
         return score
 
 if __name__ == "__main__":
-    scores = yaml.load(open("tokens.yml").read())
+    import sys
+    tokens_file = "tokens.yml"
+    if len(sys.argv) > 1:
+        tokens_file = sys.argv[1]
+    scores = yaml.load(open(tokens_file).read())
     x = StrangeGameScorer(scores)
     x.compute_cell_winners()
     print "a scores", x.compute_game_score("a")
