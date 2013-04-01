@@ -17,11 +17,11 @@ class StrangeGameScorer:
         #create empty winners array as a 3x3 grid of None
         self.winners = [[None]*3 for i in range(0,3)]
 
+
     def compute_cell_winners(self):
         for y in range(3):
             for x in range(3):
                 self.winners[y][x] = self.cell_winner(x,y)
-
 
     def compute_game_score(self, letter):
         return self.score_rows(letter) + self.score_columns(letter)
@@ -60,6 +60,8 @@ class StrangeGameScorer:
         for letter in "abcd":
             cell_scores[letter] = self.cell_score(letter, x, y)
 
+        self._check_well_formedness(cell_scores, x, y)
+
         if self.unique_highest(cell_scores):
             return max(cell_scores, key=lambda x:cell_scores[x])
         else:
@@ -72,6 +74,11 @@ class StrangeGameScorer:
         if score == 'p':
             score = float("inf")
         return score
+
+    def _check_well_formedness(self, cell_scores, x, y):
+        infinities = [v for v in cell_scores.values() if v == float("inf")]
+        if len(infinities) > 1:
+            raise Exception("More than one team given the pedestal in cell: (%d, %d)" % (x,y))
 
 if __name__ == "__main__":
     scores = yaml.load(open(sys.argv[1]).read())
