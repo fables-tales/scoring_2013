@@ -1,4 +1,5 @@
 import yaml
+import sys
 
 
 def score_line(line, letter):
@@ -73,7 +74,7 @@ class StrangeGameScorer:
         return score
 
 if __name__ == "__main__":
-    scores = yaml.load(open("tokens.yml").read())
+    scores = yaml.load(open(sys.argv[1]).read())
     x = StrangeGameScorer(scores)
     x.compute_cell_winners()
     print "a scores", x.compute_game_score("a")
