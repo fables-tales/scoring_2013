@@ -1,5 +1,5 @@
-import yaml
 
+import yaml
 
 def score_line(line, letter):
     #find the number of things in the line that match the letter
