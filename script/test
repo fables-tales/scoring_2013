@@ -4,10 +4,10 @@ import os
 
 valid_cards = os.listdir('valid_scorecards')
 for card in valid_cards:
-    assert os.system("python score.py valid_scorecards/{0}".format(card)) == 0
+    assert os.system("python score.py valid_scorecards/{0}".format(card)) == 0, card
 
 invalid_cards = os.listdir('invalid_scorecards')
 for card in invalid_cards:
-    assert os.system("python score.py invalid_scorecards/{0}".format(card)) != 0
+    assert os.system("python score.py invalid_scorecards/{0}".format(card)) != 0, card
 
 print "tests passed!"
