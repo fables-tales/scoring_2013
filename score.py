@@ -2,6 +2,15 @@
 import yaml
 import sys
 
+TOKENS_PER_TEAM = 6
+
+class TooManyTokens(Exception):
+    def __init__(self, who, count):
+        self.who = who
+        self.count = count
+    def __str__(self):
+        return "'{0}' has too many tokens (has {1}, should only have {2})".format(self.who, self.count, TOKENS_PER_TEAM)
+
 def is_pedestal(n):
     return n == 'p'
 
@@ -19,6 +28,7 @@ class StrangeGameScorer:
         self.raw_squares = raw_squares
         #create empty winners array as a 3x3 grid of None
         self.winners = [[None]*3 for i in range(0,3)]
+        self._check_token_counts()
 
 
     def compute_cell_winners(self):
@@ -82,6 +92,21 @@ class StrangeGameScorer:
         infinities = [v for v in cell_scores.values() if v == float("inf")]
         if len(infinities) > 1:
             raise Exception("More than one team given the pedestal in cell: (%d, %d)" % (x,y))
+
+    def _check_token_counts(self):
+        for id, sq in self.raw_squares.iteritems():
+
+            total = 0
+            for row in sq['squares']:
+                for cell in row:
+                    if is_pedestal(cell):
+                        # Assume!! that the pedestal only has one token
+                        total += 1
+                    else:
+                        total += cell
+
+            if total > TOKENS_PER_TEAM:
+               raise TooManyTokens(id, total)
 
 if __name__ == "__main__":
     scores = yaml.load(open(sys.argv[1]).read())

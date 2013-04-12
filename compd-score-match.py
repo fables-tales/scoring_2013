@@ -36,13 +36,20 @@ scores = yaml.load(open(match_file).read())
 # Perform some horrible munging becuase 'scores' assumes teams named for letters
 ids = ['a', 'b', 'c', 'd']
 
+id_tla_mapping = dict(zip(ids, scores.keys()))
 tla_id_mapping = dict(zip(scores.keys(), ids))
 mapped_scores = {}
 for tla, squares in scores.iteritems():
     id_ = tla_id_mapping[tla]
     mapped_scores[id_] = squares
 
-scorer = score.StrangeGameScorer(mapped_scores)
+scorer = None
+try:
+    scorer = score.StrangeGameScorer(mapped_scores)
+except score.TooManyTokens as e:
+    e.who = id_tla_mapping[e.who]
+    raise
+
 scorer.compute_cell_winners()
 
 match_id = MATCH_ID.format(match_num)
