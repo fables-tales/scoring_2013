@@ -6,6 +6,8 @@ import yaml
 
 import score
 
+MATCH_ID = 'match-{0}'
+
 def usage():
     print "Usage: score-match.py MATCH_NUMBER"
     print "  Scores the match file at matches/MATCH_NUMBER.yaml"
@@ -28,7 +30,9 @@ scores = yaml.load(open(match_file).read())
 scorer = score.StrangeGameScorer(scores)
 scorer.compute_cell_winners()
 
+match_id = MATCH_ID.format(match_num)
+
 for tla in scores.keys():
     this_score = scorer.compute_game_score(tla)
-    print 'set-score {0} {1} {2}'.format(match_num, tla, this_score)
-print 'calc-league-points {0}'.format(match_num)
+    print 'set-score {0} {1} {2}'.format(match_id, tla, this_score)
+print 'calc-league-points {0}'.format(match_id)
