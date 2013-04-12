@@ -12,3 +12,15 @@ Example:
 ~~~~
 python scores.py valid_scorecards/tokens.yml
 ~~~~
+
+The scoring script that is expected to be used is `compd-score-match.py`,
+which is executable, and outputs compd suitable commands.
+Expected usage is to be passed either `league` or `knockout`, and a match
+number. This then reads the yaml file for that match, which is stored at
+`matches/MATCH_NUMBER.yaml`. The format for these is shown by the example
+file `matches/example.yaml`.
+
+Example:
+~~~~
+./compd-score-match.py league 2
+~~~~
