@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "cd into compd"
+cd /srv/compd
+echo "use compd shell"
+source dep/bin/activate
+echo "cd src"
+cd src
+echo "generate files"
+python display_league.py > /tmp/league
+python display_schedule.py > /tmp/schedule
+echo "deploy to badger"
+scp /tmp/league badger:/var/www/html/content/en/league
+scp /tmp/schedule badger:/var/www/html/content/en/schedule
