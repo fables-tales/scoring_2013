@@ -2,6 +2,9 @@
 import yaml
 import sys
 
+def is_pedestal(n):
+    return n == 'p'
+
 def score_line(line, letter):
     #find the number of things in the line that match the letter
     count = len([x for x in line if x == letter])
@@ -71,7 +74,7 @@ class StrangeGameScorer:
         score = self.raw_squares[letter]["squares"][y][x]
         #use the character p if something is on a pedestal
         #and if it is we use float("inf") as the score
-        if score == 'p':
+        if is_pedestal(score):
             score = float("inf")
         return score
 
