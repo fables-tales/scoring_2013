@@ -32,13 +32,24 @@ if not os.path.exists(match_file):
     exit(3)
 
 scores = yaml.load(open(match_file).read())
-scorer = score.StrangeGameScorer(scores)
+
+# Perform some horrible munging becuase 'scores' assumes teams named for letters
+ids = ['a', 'b', 'c', 'd']
+
+tla_id_mapping = dict(zip(scores.keys(), ids))
+mapped_scores = {}
+for tla, squares in scores.iteritems():
+    id_ = tla_id_mapping[tla]
+    mapped_scores[id_] = squares
+
+scorer = score.StrangeGameScorer(mapped_scores)
 scorer.compute_cell_winners()
 
 match_id = MATCH_ID.format(match_num)
 
 for tla in scores.keys():
-    this_score = scorer.compute_game_score(tla)
+    id_ = tla_id_mapping[tla]
+    this_score = scorer.compute_game_score(id_)
     print 'set-score {0} {1} {2}'.format(match_id, tla, this_score)
 
 if style == 'league':
