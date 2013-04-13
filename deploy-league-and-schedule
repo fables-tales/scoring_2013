@@ -9,6 +9,10 @@ cd src
 echo "generate files"
 python display_league.py > /tmp/league
 python display_schedule.py > /tmp/schedule
+python display_html_schedule.py > /tmp/short-schedule.html
+python display_leaders.py > /tmp/leaders.html
 echo "deploy to badger"
-scp /tmp/league badger:/var/www/html/content/en/league
-scp /tmp/schedule badger:/var/www/html/content/en/schedule
+scp /tmp/league             badger:/var/www/html/content/en/league
+scp /tmp/schedule           badger:/var/www/html/content/en/schedule
+scp /tmp/short-schedule.html badger:/var/www/html/content/en/short-schedule.html
+scp /tmp/leaders.html       badger:/var/www/html/content/en/leaders.html
