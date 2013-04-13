@@ -14,5 +14,5 @@ python display_leaders.py > /tmp/leaders.html
 echo "deploy to badger"
 scp /tmp/league             badger:/var/www/html/content/en/league
 scp /tmp/schedule           badger:/var/www/html/content/en/schedule
-scp /tmp/short-schedule.html badger:/var/www/html/content/en/short-schedule.html
-scp /tmp/leaders.html       badger:/var/www/html/content/en/leaders.html
+scp /tmp/short-schedule.html    badger:/var/www/html/screens/match_sched.html
+scp /tmp/leaders.html           badger:/var/www/html/screens/leaderboard.html
